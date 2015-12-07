@@ -74,10 +74,12 @@ def upload(ctx):
         ftp = FTP(c.host, c.user, c.pwd)
         print('Connected to:', ftp.getwelcome())
         ftp.cwd('/flash')
-        for f in os.listdir(os.path.join(os.getcwd(), c.name)):
-            print('Uploading:', f)
-            with open(f, 'rb') as upload_file:
-                ftp.storbinary("STOR " + f, upload_file)
+        folder = os.path.abspath(os.path.join(os.getcwd(), c.name))
+        for f in os.listdir(folder):
+            if f.endswith('.py'):
+                print('Uploading:', f)
+                with open(os.path.join(folder, f), 'rb') as upload_file:
+                    ftp.storbinary("STOR " + f, upload_file)
 
 
 @task
