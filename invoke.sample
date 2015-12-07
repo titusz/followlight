@@ -20,5 +20,7 @@ server:
     user: myusername
     pwd: mypassword
 
-blacklist:
-    - tasks.py
+wlan:
+    ssid: YOURSSID
+    pwd: YOURPASSWORD
+

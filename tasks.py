@@ -20,6 +20,15 @@ def init(ctx, taskname):
         print("Running task '%s' against '%s' (%s)" % fill)
 
 
+def update_netcfg(ctx):
+    c = ctx.current
+    folder = os.path.abspath(c.name)
+    if c.name in (LIDAR, DOTSTAR):
+        tpl = "# -*- coding: utf-8 -*-\nSSID = '%s'\nPWD = '%s'\n"
+        with open(os.path.join(folder, 'netcfg.py'), 'w') as netcfg:
+            netcfg.write(tpl % (ctx.wlan.ssid, ctx.wlan.pwd))
+
+
 @task
 def show_config(ctx):
     """Show current configuration"""
@@ -59,16 +68,16 @@ def reset(ctx):
 def upload(ctx):
     """Upload code to machine"""
     init(ctx, 'upload')
+    update_netcfg(ctx)
     c = ctx.current
     if c.name in (LIDAR, DOTSTAR):
         ftp = FTP(c.host, c.user, c.pwd)
         print('Connected to:', ftp.getwelcome())
         ftp.cwd('/flash')
-        for f in os.listdir(os.getcwd()):
-            if f.endswith('.py') and f not in ctx.blacklist:
-                print('Uploading:', f)
-                with open(f, 'rb') as upload_file:
-                    ftp.storbinary("STOR " + f, upload_file)
+        for f in os.listdir(os.path.join(os.getcwd(), c.name)):
+            print('Uploading:', f)
+            with open(f, 'rb') as upload_file:
+                ftp.storbinary("STOR " + f, upload_file)
 
 
 @task
