@@ -1,0 +1,24 @@
+# sample invoke.yaml file
+
+debug: true
+
+lidar:
+    name: lidar
+    host: 192.168.0.2
+    user: micro
+    pwd: python
+
+dotstar:
+    name: dotstar
+    host: 192.168.0.3
+    user: micro
+    pwd: python
+
+server:
+    name: server
+    host: 192.168.0.4
+    user: myusername
+    pwd: mypassword
+
+blacklist:
+    - tasks.py
