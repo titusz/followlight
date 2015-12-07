@@ -4,8 +4,8 @@ import sys
 from ftplib import FTP
 from invoke import ctask as task
 from pprint import pprint
-
 from tools import telnet
+
 
 LIDAR = 'lidar'
 DOTSTAR = 'dotstar'
@@ -60,7 +60,7 @@ def upload(ctx):
     """Upload code to machine"""
     init(ctx, 'upload')
     c = ctx.current
-    if ctx.current.name in (LIDAR, DOTSTAR):
+    if c.name in (LIDAR, DOTSTAR):
         ftp = FTP(c.host, c.user, c.pwd)
         print('Connected to:', ftp.getwelcome())
         ftp.cwd('/flash')
