@@ -3,7 +3,7 @@ from machine import SPI
 import time
 
 
-class DotStar:
+class LedStrip:
     """
     Driver for APA102C ledstripes (Adafruit Dotstars) on the Wipy
     Connect
@@ -66,7 +66,7 @@ class DotStar:
 if __name__ == '__main__':
     """Demo"""
     import os
-    Dotty = DotStar(240)
+    Dotty = LedStrip(240)
     Dotty.send()
     bri = 1
     while True:

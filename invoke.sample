@@ -13,6 +13,7 @@ dotstar:
     host: 192.168.0.3
     user: micro
     pwd: python
+    port: 60000
 
 server:
     name: server

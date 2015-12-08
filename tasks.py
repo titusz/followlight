@@ -20,13 +20,18 @@ def init(ctx, taskname):
         print("Running task '%s' against '%s' (%s)" % fill)
 
 
+@task
 def update_netcfg(ctx):
+    """Update machine configuration from invoke.yaml"""
     c = ctx.current
     folder = os.path.abspath(c.name)
     if c.name in (LIDAR, DOTSTAR):
         tpl = "# -*- coding: utf-8 -*-\nSSID = '%s'\nPWD = '%s'\n"
         with open(os.path.join(folder, 'netcfg.py'), 'w') as netcfg:
             netcfg.write(tpl % (ctx.wlan.ssid, ctx.wlan.pwd))
+            if c.name == DOTSTAR:
+                netcfg.write("UDP_IP = '%s'\n" % c.host)
+                netcfg.write('UPD_PORT = %s\n' % c.port)
 
 
 @task
