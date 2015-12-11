@@ -11,7 +11,7 @@ class Lidar:
         self.p_trig = Pin(p_trig, mode=Pin.OUT)
         self.p_mon = Pin(p_mon, mode=Pin.IN, pull=Pin.PULL_UP)
 
-    def distance(self, reads=4):
+    def distance(self, reads=16):
         scans = []
         for f in range(0, reads):
             self.p_trig.value(0)
