@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import netcfg
+import config
 import struct
 import driver
 
@@ -23,7 +23,7 @@ class LedServer:
 
     """
 
-    def __init__(self, ip=netcfg.UDP_IP, port=netcfg.UDP_PORT, num_leds=240):
+    def __init__(self, ip=config.UDP_IP, port=config.UDP_PORT, num_leds=240):
         self.ledstrip = driver.LedStrip(num_leds)
         self.ledstrip.clear()
         self.ledstrip.send()

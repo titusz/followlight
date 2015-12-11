@@ -21,17 +21,20 @@ def init(ctx, taskname):
 
 
 @task
-def update_netcfg(ctx):
+def update_config(ctx):
     """Update machine configuration from invoke.yaml"""
     c = ctx.current
     folder = os.path.abspath(c.name)
     if c.name in (LIDAR, DOTSTAR):
         tpl = "# -*- coding: utf-8 -*-\nSSID = '%s'\nPWD = '%s'\n"
-        with open(os.path.join(folder, 'netcfg.py'), 'w') as netcfg:
-            netcfg.write(tpl % (ctx.wlan.ssid, ctx.wlan.pwd))
+        with open(os.path.join(folder, 'config.py'), 'w') as cf:
+            cf.write(tpl % (ctx.wlan.ssid, ctx.wlan.pwd))
             if c.name == DOTSTAR:
-                netcfg.write("UDP_IP = '%s'\n" % c.host)
-                netcfg.write('UPD_PORT = %s\n' % c.port)
+                cf.write("UDP_IP = '%s'\n" % c.host)
+                cf.write('UPD_PORT = %s\n' % c.port)
+            if c.name == LIDAR:
+                cf.write("PIN_MONITOR = '%s'\n" % c.pin_monitor)
+                cf.write("PIN_TRIGGER = '%s'\n" % c.pin_trigger)
 
 
 @task
@@ -73,7 +76,7 @@ def reset(ctx):
 def upload(ctx):
     """Upload code to machine"""
     init(ctx, 'upload')
-    update_netcfg(ctx)
+    update_config(ctx)
     c = ctx.current
     if c.name in (LIDAR, DOTSTAR):
         ftp = FTP(c.host, c.user, c.pwd)
