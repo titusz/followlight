@@ -7,6 +7,8 @@ lidar:
     host: 192.168.0.2
     user: micro
     pwd: python
+    monitor: GP4
+    trigger: GP6
 
 dotstar:
     name: dotstar
