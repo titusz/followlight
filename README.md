@@ -9,8 +9,6 @@ Drive a DotStar LED strip from LIDAR Lite distance measurements connected via
 
 - make sure you are on python 3.4+
 - clone this repository
-- pip install -r requirements
+- pip install -r requirements.txt
 - create a invoke.yaml configuration (see invoke.sample)
-- deploy to sensor and actor Wipy devices with:
-    `invoke lidar deploy'
-    `invoke dotstar deploy`
+- deploy to sensor and actor Wipy devices with `invoke lidar deploy` and `invoke dotstar deploy`
