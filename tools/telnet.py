@@ -22,6 +22,7 @@ class TelnetClient:
     def hard_reset(self):
         self.write('import machine')
         self.write('machine.reset()')
+        self.write('\x04')
         log.info('Machine reseted.')
 
     def open(self):
