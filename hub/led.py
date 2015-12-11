@@ -11,15 +11,15 @@ class RemoteStrip:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def clear(self):
-        data = struct.pack('!BBBBBB', 0, 0, 0, 0, 0, 0)
+        data = struct.pack('!HHHHHH', 0, 0, 0, 0, 0, 0)
         self.socket.sendto(data, (self.ip, self.port))
 
     def set(self, led=0, r=254, g=254, b=254, bri=15):
-        data = struct.pack('!BBBBBB', 1, led, r, g, b, bri)
+        data = struct.pack('!HHHHHH', 1, led, r, g, b, bri)
         self.socket.sendto(data, (self.ip, self.port))
 
     def send(self):
-        data = struct.pack('!BBBBBB', 2, 0, 0, 0, 0, 0)
+        data = struct.pack('!HHHHHH', 2, 0, 0, 0, 0, 0)
         self.socket.sendto(data, (self.ip, self.port))
 
 

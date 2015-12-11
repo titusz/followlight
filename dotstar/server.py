@@ -33,7 +33,7 @@ class LedServer:
     def run_forever(self):
         while True:
             data, addr = self.socket.recvfrom(1024)
-            for msg in struct.unpack('!BBBBBB', data):
+            for msg in struct.unpack('!HHHHHH', data):
                 if msg[0] == 0:
                     self.ledstrip.clear()
                 elif msg[0] == 1:
