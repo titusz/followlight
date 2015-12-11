@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 from machine import Pin
-from . import config
+import config
 
 
 class Lidar:
