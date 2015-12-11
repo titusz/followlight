@@ -9,6 +9,7 @@ from tools import telnet
 
 LIDAR = 'lidar'
 DOTSTAR = 'dotstar'
+HUB = 'hub'
 
 
 def init(ctx, taskname):
@@ -25,7 +26,7 @@ def update_config(ctx):
     """Update machine configuration from invoke.yaml"""
     c = ctx.current
     folder = os.path.abspath(c.name)
-    if c.name in (LIDAR, DOTSTAR):
+    if c.name in (LIDAR, DOTSTAR, HUB):
         tpl = "# -*- coding: utf-8 -*-\nSSID = '%s'\nPWD = '%s'\n"
         with open(os.path.join(folder, 'config.py'), 'w') as cf:
             cf.write(tpl % (ctx.wlan.ssid, ctx.wlan.pwd))
@@ -35,6 +36,11 @@ def update_config(ctx):
             if c.name == LIDAR:
                 cf.write("PIN_MONITOR = '%s'\n" % c.pin_monitor)
                 cf.write("PIN_TRIGGER = '%s'\n" % c.pin_trigger)
+                cf.write("HUB_IP = '%s'\n" % ctx.hub.ip)
+                cf.write("HUB_PORT = %s\n" % ctx.hub.port)
+            if c.name == HUB:
+                cf.write("HUB_IP = '%s'\n" % c.ip)
+                cf.write("HUB_PORT = %s\n" % c.port)
 
 
 @task
@@ -56,9 +62,9 @@ def dotstar(ctx):
 
 
 @task
-def server(ctx):
+def hub(ctx):
     """Apply command to Raspberry PI server"""
-    ctx['current'] = ctx.server
+    ctx['current'] = ctx.hub
 
 
 @task
