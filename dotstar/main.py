@@ -1,2 +1,5 @@
 # -*- coding: utf-8 -*-
-execfile('server.py')
+import server
+
+led_server = server.LedServer()
+led_server.run_forever()

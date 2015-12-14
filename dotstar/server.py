@@ -24,22 +24,30 @@ class LedServer:
     """
 
     def __init__(self, ip=config.UDP_IP, port=config.UDP_PORT, num_leds=240):
+
+        # Init and clear LED Strip
         self.ledstrip = driver.LedStrip(num_leds)
         self.ledstrip.clear()
         self.ledstrip.send()
+
+        # Init UDP-Socket listener
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.bind((ip, port))
 
     def run_forever(self):
+
+        sock = self.socket
+        led = self.ledstrip
+
         while True:
-            data, addr = self.socket.recvfrom(1024)
+            data, addr = sock.recvfrom(1024)
             for msg in struct.unpack('!HHHHHH', data):
                 if msg[0] == 0:
-                    self.ledstrip.clear()
+                    led.clear()
                 elif msg[0] == 1:
-                    self.ledstrip.set(msg[1], msg[2], msg[3], msg[4], msg[5])
+                    led.set(msg[1], msg[2], msg[3], msg[4], msg[5])
                 elif msg[0] == 2:
-                    self.ledstrip.send()
+                    led.send()
 
 
 if __name__ == "__main__":
