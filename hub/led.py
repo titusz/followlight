@@ -14,17 +14,17 @@ class RemoteStrip:
     def clear(self):
         data = struct.pack('!HHHHHH', 0, 0, 0, 0, 0, 0)
         self.socket.sendto(data, (self.ip, self.port))
-        time.sleep(0.002)
+        time.sleep(0.001)
 
     def set(self, led=0, r=254, g=254, b=254, bri=15):
         data = struct.pack('!HHHHHH', 1, led, r, g, b, bri)
         self.socket.sendto(data, (self.ip, self.port))
-        time.sleep(0.002)
+        time.sleep(0.001)
 
     def send(self):
         data = struct.pack('!HHHHHH', 2, 0, 0, 0, 0, 0)
         self.socket.sendto(data, (self.ip, self.port))
-        time.sleep(0.002)
+        time.sleep(0.001)
 
 
 if __name__ == "__main__":
