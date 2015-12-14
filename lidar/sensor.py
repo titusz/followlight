@@ -22,11 +22,11 @@ class LidarSensor:
     def transmit_forever(self):
         last = 0
         while True:
-            centimeters = self.lidar.distance()
-            if centimeters != last:
-                data = struct.pack('!H', centimeters)
+            cm = self.lidar.distance()
+            if last not in (cm - 1, cm, cm + 1):
+                data = struct.pack('!H', cm)
                 self.socket.sendto(data, (self.hub_ip, self.hub_port))
-                last = centimeters
+                last = cm
 
 
 if __name__ == "__main__":
