@@ -40,14 +40,14 @@ class LedServer:
         led = self.ledstrip
 
         while True:
-            data, addr = sock.recvfrom(1024)
-            for msg in struct.unpack('!HHHHHH', data):
-                if msg[0] == 0:
-                    led.clear()
-                elif msg[0] == 1:
-                    led.set(msg[1], msg[2], msg[3], msg[4], msg[5])
-                elif msg[0] == 2:
-                    led.send()
+            data, addr = sock.recvfrom(512)
+            msg = struct.unpack('!HHHHHH', data)
+            if msg[0] == 0:
+                led.clear()
+            elif msg[0] == 1:
+                led.set(msg[1], msg[2], msg[3], msg[4], msg[5])
+            elif msg[0] == 2:
+                led.send()
 
 
 if __name__ == "__main__":
