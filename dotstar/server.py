@@ -13,7 +13,7 @@ class LedServer:
     """
     Receive and execute LedStrip commands.
 
-    Each message is 6 bytes long:
+    Each message is 6 x 2 bytes:
         message_type, led_number, red, green, blue, brightness
 
     Message Types:
@@ -40,7 +40,7 @@ class LedServer:
         led = self.ledstrip
 
         while True:
-            data, addr = sock.recvfrom(512)
+            data = sock.recv(12)
             msg = struct.unpack('!HHHHHH', data)
             if msg[0] == 0:
                 led.clear()
