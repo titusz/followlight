@@ -2,11 +2,12 @@
 import socket
 import struct
 import time
+import config
 
 
 class RemoteStrip:
 
-    def __init__(self, target_ip="192.168.2.38", target_port=6000):
+    def __init__(self, target_ip=config.DOTSTAR_IP, target_port=config.DOTSTAR_PORT):
         self.ip = target_ip
         self.port = target_port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

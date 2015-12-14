@@ -41,6 +41,9 @@ def update_config(ctx):
             if c.name == HUB:
                 cf.write("HUB_IP = '%s'\n" % c.ip)
                 cf.write("HUB_PORT = %s\n" % c.port)
+                cf.write("DOTSTAR_IP = '%s'\n" % ctx.dotstar.host)
+                cf.write("DOTSTAR_PORT = %s\n" % ctx.dotstar.port)
+
 
 
 @task
