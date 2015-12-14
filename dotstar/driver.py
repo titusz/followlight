@@ -66,18 +66,18 @@ class LedStrip:
 if __name__ == '__main__':
     """Demo"""
     import os
-    Dotty = LedStrip(240)
-    Dotty.send()
+    lstrip = LedStrip(240)
+    lstrip.send()
     bri = 1
     while True:
         r1 = ord(os.urandom(1))
         r2 = ord(os.urandom(1))
         r3 = ord(os.urandom(1))
-        for i in range(0, Dotty.ledcount):
-            Dotty.clear()
-            Dotty.set(led=i, red=r1, green=r2, blue=r3)
-            Dotty.set(led=Dotty.ledcount - 1 - i, red=r3, green=r2, blue= r1)
-            Dotty.set(led=(Dotty.ledcount // 2) - (i // 2), red=r2, green=r1, blue=r3)
-            Dotty.set(led=(Dotty.ledcount // 2) + (i // 2), red=r2, green=r1, blue=r3)
-            Dotty.send()
-            time.sleep_ms(20)
+        for i in range(0, lstrip.ledcount):
+            lstrip.clear()
+            lstrip.set(led=i, red=r1, green=r2, blue=r3)
+            lstrip.set(led=lstrip.ledcount - 1 - i, red=r3, green=r2, blue=r1)
+            lstrip.set(led=(lstrip.ledcount // 2) - (i // 2), red=r2, green=r1, blue=r3)
+            lstrip.set(led=(lstrip.ledcount // 2) + (i // 2), red=r2, green=r1, blue=r3)
+            lstrip.send()
+            time.sleep_ms(10)
