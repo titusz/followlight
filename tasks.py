@@ -32,7 +32,7 @@ def update_config(ctx):
             cf.write(tpl % (ctx.wlan.ssid, ctx.wlan.pwd))
             if c.name == DOTSTAR:
                 cf.write("UDP_IP = '%s'\n" % c.host)
-                cf.write('UPD_PORT = %s\n' % c.port)
+                cf.write('UDP_PORT = %s\n' % c.port)
             if c.name == LIDAR:
                 cf.write("PIN_MONITOR = '%s'\n" % c.pin_monitor)
                 cf.write("PIN_TRIGGER = '%s'\n" % c.pin_trigger)
