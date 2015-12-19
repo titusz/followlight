@@ -21,9 +21,13 @@ class LidarSensor:
 
     def transmit_forever(self):
         last = 0
+        queue = list(range(128))
         while True:
-            cm = self.lidar.distance()
-            if last not in (cm - 1, cm, cm + 1):
+            measure = self.lidar.distance()
+            queue.append(measure)
+            queue.pop(0)
+            cm = sum(queue) // 128
+            if last != cm:
                 data = struct.pack('!H', cm)
                 self.socket.sendto(data, (self.hub_ip, self.hub_port))
                 last = cm
