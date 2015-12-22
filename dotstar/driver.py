@@ -29,7 +29,7 @@ class LedStrip:
         self.spi = SPI(
             0,
             mode=SPI.MASTER,
-            baudrate=8000000,
+            baudrate=4000000,
             polarity=0,
             phase=0,
             bits=8,
@@ -80,4 +80,4 @@ if __name__ == '__main__':
             lstrip.set(led=(lstrip.ledcount // 2) - (i // 2), red=r2, green=r1, blue=r3)
             lstrip.set(led=(lstrip.ledcount // 2) + (i // 2), red=r2, green=r1, blue=r3)
             lstrip.send()
-            time.sleep_ms(10)
+            time.sleep_ms(5)
