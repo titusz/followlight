@@ -1,1 +1,2 @@
 invoke==0.11.1
+PyTweening==1.0.3
