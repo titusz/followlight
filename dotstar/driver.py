@@ -64,7 +64,11 @@ class LedStrip:
         self.spi.write(self.startframe + self.buffer)
 
 if __name__ == '__main__':
-    """Demo"""
+    """Demo
+
+    To run the demo do this on your micropython shell
+    >>> execfile('driver.py')
+    """
     import os
     lstrip = LedStrip(240)
     lstrip.send()
@@ -80,4 +84,4 @@ if __name__ == '__main__':
             lstrip.set(led=(lstrip.ledcount // 2) - (i // 2), red=r2, green=r1, blue=r3)
             lstrip.set(led=(lstrip.ledcount // 2) + (i // 2), red=r2, green=r1, blue=r3)
             lstrip.send()
-            time.sleep_ms(5)
+            time.sleep_ms(1)
