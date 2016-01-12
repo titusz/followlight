@@ -3,6 +3,8 @@ import socket
 import struct
 import time
 import config
+import pytweening as tween
+from inspect import getmembers
 
 
 class RemoteStrip:
@@ -18,30 +20,46 @@ class RemoteStrip:
         time.sleep(0.001)
 
     def set(self, led=0, r=254, g=254, b=254, bri=15):
-        data = struct.pack('!HHHHHH', 1, led, r, g, b, bri)
+        data = struct.pack('!HHHHHH', 1, led % 240, r % 256, g % 256, b % 256, bri % 32)
         self.socket.sendto(data, (self.ip, self.port))
         time.sleep(0.001)
 
     def send(self):
         data = struct.pack('!HHHHHH', 2, 0, 0, 0, 0, 0)
         self.socket.sendto(data, (self.ip, self.port))
-        time.sleep(0.001)
+        time.sleep(0.0001)
 
 
-if __name__ == "__main__":
-    from random import randint
+def forth_and_back():
+    for x in range(240):
+        yield x
+    for y in reversed(range(240)):
+        yield y
+
+
+def easer():
+    """Run all ease functions from pytweening on remote strip."""
     ledstrip = RemoteStrip()
     ledstrip.clear()
     ledstrip.send()
-    bris = range(0, 32)
-    while True:
-        r1 = randint(0, 255)
-        r2 = randint(0, 255)
-        r3 = randint(0, 255)
-        for i in range(0, 240):
-            ledstrip.clear()
-            ledstrip.set(led=i, r=r1, g=r2, b=r3)
-            ledstrip.set(led=240 - 1 - i, r=r3, g=r2, b=r1)
-            ledstrip.set(led=(240 // 2) - (i // 2), r=r2, g=r1, b=r3)
-            ledstrip.set(led=(240 // 2) + (i // 2), r=r2, g=r1, b=r3)
+    last = 0
+    funcs = [func[1] for func in getmembers(tween) if func[0].startswith('ease')]
+
+    for func in funcs:
+        print(func)
+        for x in forth_and_back():
+            ledstrip.set(last, 0, 0, 0, 0)
+            prop = func(x / 240)
+            led = abs(int(round(prop * 240)))
+            ledstrip.set(led, 0, 255, 0, 31)
             ledstrip.send()
+            last = led
+            time.sleep(0.005)
+
+
+if __name__ == "__main__":
+    """Easer Demo
+
+    Make sure LedServer is running on the Wipy.
+    """
+    easer()
